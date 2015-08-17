@@ -3,9 +3,9 @@
     @include_once('../../conf/conf.php');
     require_once(__PATH__.'/autoload.php');*/
 
-    use Endroid\Gcm\Client;
+use Endroid\Gcm\Client;
 
-    class AplUser {
+class AplUser {
         public function __construct(){}
         public function __destruct(){}
 
@@ -41,7 +41,7 @@
                     'message' => $pushMessage->message,
                 );
 
-<<<<<<< HEAD
+
                 $notification = array(
                     'title'=>'Nova mensagem',
                     'body'=>'Essa é uma mensagem de tests, Essa é uma mensagem de tests, Essa é uma mensagem de tests',
@@ -49,8 +49,6 @@
                     'big_picture'=>'http://s3.amazonaws.com/rapgenius/1372211201_Huvafen-Fushi-Maldives-Deluxe-mare.jpg'
                 );
 
-=======
->>>>>>> origin/master
                 $options = [
                     'collapse_key'=>'myTestPushMessage',
                     'delay_while_idle'=>false,
@@ -59,13 +57,9 @@
                     'dry_run'=>false
                 ];
 
-<<<<<<< HEAD
                 $client->send( $notification, $registrationIds, $options ); // ENVIA A PUSH MESSAGE
-=======
-                $client->send($data, $registrationIds, $options); // ENVIA A PUSH MESSAGE
->>>>>>> origin/master
                 $responses = $client->getResponses();
-                var_dump($responses);
+                //var_dump($responses);
 
                 // ACESSA A ÚNICA POSIÇÃO POSSÍVEL, PRIMEIRA POSIÇÃO
                 foreach( $responses as $response ){
