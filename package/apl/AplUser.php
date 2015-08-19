@@ -59,7 +59,7 @@ class AplUser {
 
                 $client->send( $notification, $registrationIds, $options ); // ENVIA A PUSH MESSAGE
                 $responses = $client->getResponses();
-                //var_dump($responses);
+                var_dump($responses);
 
                 // ACESSA A ÚNICA POSIÇÃO POSSÍVEL, PRIMEIRA POSIÇÃO
                 foreach( $responses as $response ){
