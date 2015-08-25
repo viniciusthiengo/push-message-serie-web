@@ -6,26 +6,36 @@
 use Endroid\Gcm\Client;
 
 class AplUser {
-        public function __construct(){}
-        public function __destruct(){}
+    public function __construct(){}
+    public function __destruct(){}
 
 
-        static public function saveUser( $user )
-        {
-            return( CgdUser::saveUser( $user ) );
+    static public function saveUser( User $user )
+    {
+        $result = CgdUser::saveUser( $user );
+
+        // IF USER WAS REGISTERED CORRECTLY, SO WE TAKE HIS DATABASE ID
+        if( $result ){
+            $user->id = CgdUser::getUserId( $user );
         }
 
+        return( $result );
+    }
 
-        static public function getUsers( $user=null )
-        {
-            return( CgdUser::getUsers( $user ) );
-        }
+    static public function updateUserNickname( User $user )
+    {
+        $result = CgdUser::updateUserNickname( $user );
+        return( $result );
+    }
 
+    static public function getUsers( User $user=null )
+    {
+        return( CgdUser::getUsers( $user ) );
+    }
 
-        static public function sendPushMessage( PushMessage $pushMessage, User $user=null )
+    static public function sendPushMessage( PushMessage $pushMessage, User $user=null )
         {
             $userArray = AplUser::getUsers( $user );
-
 
             // GCM SENDER
                 $client = new Client(__API_KEY__);
@@ -86,4 +96,135 @@ class AplUser {
                     }
                 }
         }
+
+    static public function getUsersToChat( User $user )
+    {
+        $userArray = CgdUser::getUsersToChat( $user );
+
+        for( $i = 0, $tamI = count($userArray); $i < $tamI; $i++ ){
+            $userArray[ $i ]->numberNewMessages = CgdUser::getNumberNewMessages( $userArray[ $i ], $user );
+        }
+
+        return( $userArray );
     }
+
+
+    // MESSAGE
+        static public function saveMessage( Message $message )
+        {
+            $result = CgdUser::saveMessage( $message );
+
+            // SAVE LAST INTERACTION
+            if( $result ){
+                CgdUser::updateLastInteraction( $message->userFrom, $message->userTo, $message->regTime );
+                CgdUser::updateLastInteraction( $message->userTo, $message->userFrom, $message->regTime );
+
+                $message->id = CgdUser::getMessageId( $message );
+
+                $message->userTo = CgdUser::getUser($message->userTo);
+                $message->userFrom = CgdUser::getUser($message->userFrom);
+
+                AplUser::sendPushMessageNewMessage( $message, $message->userFrom, $message->userTo );
+            }
+
+            return( $result );
+        }
+
+        static public function sendPushMessageNewMessage( Message $message, User $userFrom, User $userTo )
+        {
+            // GCM SENDER
+            $client = new Client(__API_KEY__);
+
+            // REGISTRATION IDS IN ARRAY
+            $registrationIds = [];
+            $registrationIds[] = $userFrom->registrationId;
+            $registrationIds[] = $userTo->registrationId;
+
+            $data = array(
+                'type' => 1,
+                'id' => $message->id,
+                'title' => 'Mensagem de: '.$userFrom->nickname,
+                'message' => $message->message,
+                'regTime' => $message->regTime,
+                'userFrom_id' => $userFrom->id,
+                'userFrom_nickname' => $userFrom->nickname,
+                'userTo_id' => $userTo->id,
+                'userTo_nickname' => $userTo->nickname,
+            );
+
+            $options = [
+                'collapse_key'=>'newMessage',
+                'delay_while_idle'=>false,
+                'time_to_live'=>(4 * 7 * 24 * 60 * 60),
+                'restricted_package_name'=>'br.com.thiengo.gcmexample',
+                'dry_run'=>false
+            ];
+
+            $client->send( $data, $registrationIds, $options ); // ENVIA A PUSH MESSAGE
+            $responses = $client->getResponses();
+
+            // ACESSA A ÚNICA POSIÇÃO POSSÍVEL, PRIMEIRA POSIÇÃO
+            foreach( $responses as $response ){
+                $response = json_decode( $response->getContent() );
+
+                // VERIFICA SE HÁ ALGUM CANONICAL_ID, QUE INDICA QUE AO MENOS UM REGISTRATION_ID DEVE SER ATUALIZADO
+                if( $response->canonical_ids > 0 || $response->failure > 0 ){
+
+                    // PERCORRE TODOS OS RESULTADOS VERIFICANDO SE HÁ UM REGISTRATION_ID PARA SER ALTERADO
+                    for( $i = 0, $tamI = count( $response->results ); $i < $tamI; $i++ ){
+
+                        if( !empty( $response->results[$i]->canonical_id ) ){
+
+                            // SE HÁ UM NOVO REGISTRATION_ID, ENTÃO ALTERANO BD
+                            if( $i == 0 ){
+                                $userFrom->registrationId = $response->results[$i]->canonical_id;
+                                CgdUser::updateRegistrationId( $userFrom );
+                            }
+                            else{
+                                $userTo->registrationId = $response->results[$i]->canonical_id;
+                                CgdUser::updateRegistrationId( $userTo );
+                            }
+
+                        }
+                        else if( strcasecmp( $response->results[$i]->error, "NotRegistered" ) == 0 ){
+
+                            // DELETE REGISTRO DO BD
+                            if( $i == 0 ){
+                                CgdUser::deleteUser( $userFrom );
+                            }
+                            else{
+                                CgdUser::deleteUser( $userTo );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        static public function getMessages( User $userFrom, User $userTo )
+        {
+            $userFrom = CgdUser::getUser($userFrom);
+            $userTo = CgdUser::getUser($userTo);
+
+            $messageArray = CgdUser::getMessages( $userFrom, $userTo );
+            for( $i = 0, $tamI = count($messageArray); $i < $tamI; $i++ ){
+
+                if( $messageArray[$i]->wasRead == 0 ){
+                    $messageArray[$i]->wasRead = 1;
+                    CgdUser::updateMessageWasRead( $messageArray[$i] );
+                }
+
+                if( $messageArray[$i]->userFrom->id == $userFrom->id ){
+                    $messageArray[$i]->userFrom = $userFrom;
+                    $messageArray[$i]->userTo = $userTo;
+                }
+                else{
+                    $messageArray[$i]->userFrom = $userTo;
+                    $messageArray[$i]->userTo = $userFrom;
+                }
+            }
+
+
+            return( $messageArray );
+        }
+}

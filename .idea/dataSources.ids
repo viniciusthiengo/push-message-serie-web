@@ -27,12 +27,28 @@
       <column name="reg_time" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="tcc_message" schema="" catalog="tc_cars" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="id_user_from" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="id_user_to" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="message" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="reg_time" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="was_read" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
     <table name="tcc_user" schema="" catalog="tc_cars" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="registration_id" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
       <column name="reg_time" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="nickname" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="registration_id" unique="true" columns="registration_id"/>
+    </table>
+    <table name="tcc_user_last_interaction" schema="" catalog="tc_cars" type="TABLE">
+      <column name="id_user_from" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="id_user_to" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="reg_time" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id_user_from,id_user_to"/>
     </table>
   </data-source>
 </component>
