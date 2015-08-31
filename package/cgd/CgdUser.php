@@ -138,12 +138,10 @@ SQL;
                 $userArray[] = $aux;
             }
 
-            //Util::generateFile( $query." <-- COUNT --> ".count($userArray) );
-
             return( $userArray );
         }
 
-        static public function getUser( User $user )
+        static public function getUser( $user )
         {
             $query = <<<SQL
                 select
@@ -240,6 +238,63 @@ SQL;
             return( $statement->rowCount() > 0 );
         }
 
+        static public function updateNotificationConf( User $userFrom, User $userTo ){
+            $query = <<<SQL
+                insert into
+                  tcc_user_last_interaction (id_user_from,
+                                            id_user_to,
+                                            notification_status,
+                                            notification_time)
+                  values (:id_user_from,
+                          :id_user_to,
+                          :notification_status,
+                          :notification_time)
+                  on duplicate key
+                    update
+                      notification_status = :notification_status,
+                      notification_time = :notification_time
+SQL;
+            $database = (new Database())->getConn();
+            $statement = $database->prepare($query);
+            $statement->bindValue(':id_user_from', $userFrom->id, PDO::PARAM_INT);
+            $statement->bindValue(':id_user_to', $userTo->id, PDO::PARAM_INT);
+            $statement->bindValue(':notification_status', $userTo->notificationConf->status, PDO::PARAM_INT);
+            $statement->bindValue(':notification_time', $userTo->notificationConf->time, PDO::PARAM_INT);
+            $statement->execute();
+            $database = null;
+
+            return( $statement->rowCount() > 0 );
+        }
+
+        static public function getNotificationConf( User $userFrom, User $userTo ){
+            $query = <<<SQL
+                select
+                  notification_status,
+                  notification_time
+                  from
+                    tcc_user_last_interaction
+                  where
+                    id_user_from = :id_user_from
+                    and
+                    id_user_to = :id_user_to
+                  limit 1
+SQL;
+            $database = (new Database())->getConn();
+            $statement = $database->prepare($query);
+            $statement->bindValue(':id_user_from', $userFrom->id, PDO::PARAM_INT);
+            $statement->bindValue(':id_user_to', $userTo->id, PDO::PARAM_INT);
+            $statement->execute();
+            $database = null;
+
+            $aux = new NotificationConf();
+            if( ($data = $statement->fetchObject()) !== false ){
+                $aux->status = $data->notification_status;
+                $aux->time = $data->notification_time;
+            }
+
+            return( $aux );
+        }
+
 
         // MESSAGE
             static public function saveMessage( Message $message )
@@ -268,7 +323,7 @@ SQL;
                 return( $statement->rowCount() > 0 );
             }
 
-            static public function updateMessageWasRead( Message $message )
+            static public function updateMessageWasRead( $message )
             {
                 $query = <<<SQL
                         update
@@ -277,6 +332,10 @@ SQL;
                             was_read = :was_read
                           where
                             id = :id
+                            and
+                            id_user_to = :id_user_to
+                            and
+                            id_user_from = :id_user_from
                           limit 1
 SQL;
                 //exit( $query );
@@ -284,6 +343,8 @@ SQL;
                 $statement = $database->prepare($query);
                 $statement->bindValue(':id', $message->id, PDO::PARAM_INT);
                 $statement->bindValue(':was_read', $message->wasRead, PDO::PARAM_INT);
+                $statement->bindValue(':id_user_to', $message->userTo->id, PDO::PARAM_INT);
+                $statement->bindValue(':id_user_from', $message->userFrom->id, PDO::PARAM_INT);
                 $statement->execute();
                 $database = null;
 
@@ -315,8 +376,51 @@ SQL;
                 return( $statement->fetchColumn(0) );
             }
 
-            static public function getMessages( User $userFrom, User $userTo )
+            static public function getNewMessagesSummary( $user )
             {
+                $query = <<<SQL
+                                select
+                                  tm.id,
+                                  tm.message,
+                                  tm.id_user_from,
+                                  tu.nickname
+                                  from
+                                    tcc_message tm
+                                    inner join
+                                    tcc_user tu
+                                      on( tm.id_user_from = tu.id )
+                                  where
+                                    tm.id_user_to = :id_user_to
+                                    and
+                                    tm.was_read = 0
+                                  order by
+                                    tm.id desc
+SQL;
+                //exit( $query );
+                $database = (new Database())->getConn();
+                $statement = $database->prepare($query);
+                $statement->bindValue(':id_user_to', $user->id, PDO::PARAM_INT);
+                $statement->execute();
+                $database = null;
+
+                $messageArray = [];
+                while( ( $data = $statement->fetchObject() ) !== false ){
+                    $aux = new Message();
+                    $aux->id = $data->id;
+                    $aux->message = substr( $data->message, 0, 50);
+                    $aux->userFrom = new User( $data->id_user_from );
+                    $aux->userFrom->nickname = $data->nickname;
+
+                    $messageArray[] = $aux;
+                }
+
+                return( $messageArray );
+            }
+
+            static public function getMessages( Message $message )
+            {
+                $data = [];
+                $data[0] = empty( $message->id ) ? '' : 'id < :id and';
                 $query = <<<SQL
                             select
                               id,
@@ -328,16 +432,19 @@ SQL;
                               from
                                 tcc_message
                               where
+                                {$data[0]}
                                 (
-                                    id_user_from = :id_user_from
-                                    and
-                                    id_user_to = :id_user_to
-                                )
-                                or
-                                (
-                                    id_user_from = :id_user_to
-                                    and
-                                    id_user_to = :id_user_from
+                                    (
+                                        id_user_from = :id_user_from
+                                        and
+                                        id_user_to = :id_user_to
+                                    )
+                                    or
+                                    (
+                                        id_user_from = :id_user_to
+                                        and
+                                        id_user_to = :id_user_from
+                                    )
                                 )
                               order by
                                 id desc
@@ -346,8 +453,11 @@ SQL;
                 //exit( $query );
                 $database = (new Database())->getConn();
                 $statement = $database->prepare($query);
-                $statement->bindValue(':id_user_from', $userFrom->id, PDO::PARAM_INT);
-                $statement->bindValue(':id_user_to', $userTo->id, PDO::PARAM_INT);
+                if( !empty( $message->id ) ){
+                    $statement->bindValue(':id', $message->id, PDO::PARAM_INT);
+                }
+                $statement->bindValue(':id_user_from', $message->userFrom->id, PDO::PARAM_INT);
+                $statement->bindValue(':id_user_to', $message->userTo->id, PDO::PARAM_INT);
                 $statement->bindValue(':limit', Message::LIMIT, PDO::PARAM_INT);
                 $statement->execute();
                 $database = null;
@@ -393,5 +503,29 @@ SQL;
                 $database = null;
 
                 return( $statement->fetchColumn(0) );
+            }
+
+            static public function removeMessage( $message ){
+                $query = <<<SQL
+                    delete from
+                      tcc_message
+                      where
+                        id = :id
+                        and
+                        id_user_from = :id_user_from
+                        and
+                        id_user_to = :id_user_to
+                      limit 1
+SQL;
+                //exit( $query );
+                $database = (new Database())->getConn();
+                $statement = $database->prepare($query);
+                $statement->bindValue(':id', $message->id, PDO::PARAM_INT);
+                $statement->bindValue(':id_user_from', $message->userFrom->id, PDO::PARAM_INT);
+                $statement->bindValue(':id_user_to', $message->userTo->id, PDO::PARAM_INT);
+                $statement->execute();
+                $database = null;
+
+                return( $statement->rowCount() > 0 );
             }
     }

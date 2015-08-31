@@ -10,6 +10,9 @@
 
         const METHOD_SAVE = 'save-message';
         const METHOD_GET_MESSAGES = 'get-messages';
+        const METHOD_LOAD_OLD_MESSAGES = 'load-old-messages';
+        const METHOD_UPDATE_MESSAGES = 'update-messages-read';
+        const METHOD_REMOVE = 'remove-message';
 
         const LIMIT = 10;
 
@@ -25,7 +28,7 @@
                                      $userFrom=null,
                                      $userTo=null,
                                      $message=0,
-                                     $wasRead=false,
+                                     $wasRead=0,
                                      $regTime=0 )
         {
             $this->id = $id;

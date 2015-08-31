@@ -17,7 +17,9 @@
         public $nickname;
         public $numberNewMessages;
         public $isTyping;
+        public $notificationConf;
         public $regTime;
+        public $messages;
 
 
         public function __construct( $id=0,
@@ -25,6 +27,7 @@
                                      $nickname=null,
                                      $numberNewMessages=0,
                                      $isTyping=false,
+                                     NotificationConf $notificationConf = null,
                                      $regTime=0 )
         {
             $this->id = $id;
@@ -32,6 +35,18 @@
             $this->nickname = $nickname;
             $this->numberNewMessages = $numberNewMessages;
             $this->isTyping = $isTyping;
+            $this->notificationConf = $notificationConf;
             $this->regTime = empty($regTime) ? time() : $regTime;
         }
+
+
+        public function getMessages(){
+            $array = [];
+
+            for( $i = 0, $tamI = min( count($this->messages), 20 ); $i < $tamI; $i++ ){
+                $array[] = $this->messages[$i];
+            }
+            return($array);
+        }
+
     }

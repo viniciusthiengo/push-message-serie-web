@@ -6,6 +6,7 @@
 
 
 
+
     if( $_SERVER['REQUEST_METHOD'] === 'POST' ){
         $jsonObject = json_decode($_POST['jsonObject']);
 
@@ -53,6 +54,25 @@
         }
 
 
+        // UPDATE NOTIFICATION CONF
+        else if( strcasecmp($jsonObject->method, NotificationConf::METHOD_UPDATE) == 0 ){
+
+            $userTo = new User();
+            $userTo->id = $jsonObject->user->id;
+            $userTo->notificationConf = new NotificationConf();
+            $userTo->notificationConf->status = $jsonObject->userFrom->notificationConf->status;
+            $userTo->notificationConf->setTime( $jsonObject->userFrom->notificationConf->time );
+
+            $userFrom = new User();
+            $userFrom->id = $jsonObject->userFrom->id;
+
+            $result = AplUser::updateNotificationConf($userFrom, $userTo);
+
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode( array('result'=>$result) );
+        }
+
+
         // SAVE MESSAGE
         else if( strcasecmp($jsonObject->method, Message::METHOD_SAVE) == 0 ){
 
@@ -73,21 +93,48 @@
         }
 
 
-        // GET MESSAGES
-        else if( strcasecmp($jsonObject->method, Message::METHOD_GET_MESSAGES) == 0 ){
+        // GET / LOAD MORE MESSAGES
+        else if( strcasecmp($jsonObject->method, Message::METHOD_GET_MESSAGES) == 0
+            || strcasecmp($jsonObject->method, Message::METHOD_LOAD_OLD_MESSAGES) == 0){
 
-            $userFrom = new User();
-            $userFrom->id = $jsonObject->message->userFrom->id;
+            $message = new Message( );
+            $message->id = $jsonObject->message->id;
 
-            $userTo = new User();
-            $userTo->id = $jsonObject->message->userTo->id;
+            $message->userFrom = new User();
+            $message->userFrom->id = $jsonObject->message->userFrom->id;
 
-            $messageArray = AplUser::getMessages( $userFrom, $userTo );
+            $message->userTo = new User();
+            $message->userTo->id = $jsonObject->message->userTo->id;
+
+            $messageArray = AplUser::getMessages( $message );
 
             header('Content-Type: application/json; charset=utf-8');
             echo json_encode( array( 'messages'=>$messageArray ) );
         }
 
+
+        // UPDATED MESSAGES ALREADY READ
+        else if( strcasecmp($jsonObject->method, Message::METHOD_UPDATE_MESSAGES) == 0 ){
+
+            $messages = $jsonObject->messages;
+
+            AplUser::updateMessages( $messages );
+
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode( array( 'result'=>true ) );
+        }
+
+
+        // REMOVE MESSAGE
+        else if( strcasecmp($jsonObject->method, Message::METHOD_REMOVE) == 0 ){
+
+            $message = $jsonObject->message;
+
+            $result = AplUser::removeMessage( $message );
+
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode( array( 'result'=>$result ) );
+        }
     }
 
 
