@@ -5,6 +5,9 @@
 
 use Endroid\Gcm\Client;
 
+//use Gcm\Xmpp\Daemon;
+//use Gcm\Message;
+
 class AplUser {
     public function __construct(){}
     public function __destruct(){}
@@ -115,7 +118,7 @@ class AplUser {
 
 
     // MESSAGE
-        static public function saveMessage( Message $message )
+        static public function saveMessage( Message $message, $daemon=null )
         {
             $result = CgdUser::saveMessage( $message );
 
@@ -124,7 +127,8 @@ class AplUser {
                 CgdUser::updateLastInteraction( $message->userFrom, $message->userTo, $message->regTime );
                 CgdUser::updateLastInteraction( $message->userTo, $message->userFrom, $message->regTime );
 
-                $message->id = CgdUser::getMessageId( $message );
+                //$message->id = CgdUser::getMessageId( $message );
+                //Util::generateFile("LAST ID: ".$message->id, 'a');
 
                 $message->userTo = CgdUser::getUser($message->userTo);
                 $message->userTo->notificationConf = CgdUser::getNotificationConf( $message->userFrom, $message->userTo );
@@ -132,10 +136,44 @@ class AplUser {
 
                 $message->userFrom = CgdUser::getUser($message->userFrom);
 
-                AplUser::sendPushMessageNewMessage( $message, $message->userFrom, $message->userTo );
+                //AplUser::sendPushMessageNewMessage( $message, $message->userFrom, $message->userTo );
+
+                AplUser::sendPushMessageNewMessage_XMPP( $daemon, $message, $message->userFrom, $message->userTo );
+                AplUser::sendPushMessageNewMessage_XMPP( $daemon, $message, $message->userFrom, $message->userTo, true );
+
             }
 
             return( $result );
+        }
+
+        static public function sendPushMessageNewMessage_XMPP( $daemon, Message $msg, User $userFrom, User $userTo, $isUserFromMain=false )
+        {
+            $userToRegId = $isUserFromMain ? $userFrom->registrationId : $userTo->registrationId;
+            $payload = array(
+                'type' => 1,
+                'id' => $msg->id,
+                'title' => 'Mensagem de: '.$userFrom->nickname,
+                'message' => $msg->message,
+                'regTime' => $msg->regTime * 1000,
+                'userFrom_id' => $userFrom->id,
+                'userFrom_nickname' => $userFrom->nickname,
+                'userTo_id' => $userTo->id,
+                'userTo_nickname' => $userTo->nickname,
+                'userTo_notification_status' => $userTo->notificationConf->status,
+                'userTo_notification_time' => ($userTo->notificationConf->time * 1000),
+                'userTo_new_messages' => json_encode(["messages"=>$userTo->getMessages() ]),
+                'userTo_amount_new_messages' => count($userTo->messages),
+            );
+
+            Util::generateFile("SEND TO: ".$userToRegId, 'a');
+            Util::generateFile("ID MSG: ".$msg->id, 'a');
+
+            $message = new \Gcm\Message( $userToRegId, $payload, "newMessage");
+            $message->setMessageId( $isUserFromMain ? '' : $msg->ackId );
+            $message->setTimeToLive( 60 );
+            $message->setDeliveryReceiptRequested( ! $isUserFromMain );
+
+            $daemon->send($message);
         }
 
         static public function sendPushMessageNewMessage( Message $message, User $userFrom, User $userTo )
@@ -146,7 +184,7 @@ class AplUser {
             // REGISTRATION IDS IN ARRAY
             $registrationIds = [];
             $registrationIds[] = $userFrom->registrationId;
-            $registrationIds[] = $userTo->registrationId;
+            //$registrationIds[] = $userTo->registrationId;
 
             $data = array(
                 'type' => 1,
@@ -240,16 +278,28 @@ class AplUser {
             return( $messageArray );
         }
 
-        static public function updateMessages( $messages )
+        static public function updateMessages( $messages, $daemon=null )
         {
             foreach( $messages as $value ){
-
                 $value->wasRead = 1;
                 $result = CgdUser::updateMessageWasRead( $value );
 
                 if( $result ){
                     $value->userFrom = CgdUser::getUser($value->userFrom);
-                    sleep(2);
+
+                    if( !is_null($daemon) ){
+                        Util::generateFile( 'FAKE ID: '.$value->ackId, 'a' );
+
+                        $recievedMessage = new \Gcm\RecievedMessage( '',
+                            '',
+                            0,
+                            'dr2:'.$value->ackId,
+                            $value->userFrom->registrationId,
+                            '');
+
+                        $daemon->sendAck( $recievedMessage);
+                    }
+
                     AplUser::sendPushMessageWasRead( $value,
                         $value->userFrom,
                         $value->userTo );
@@ -280,10 +330,11 @@ class AplUser {
                 'restricted_package_name'=>'br.com.thiengo.gcmexample',
                 'dry_run'=>false
             ];
+            Util::generateFile( 'SEND: '.$userFrom->registrationId, 'a' );
 
             $client->send( $data, $registrationIds, $options ); // ENVIA A PUSH MESSAGE
             $responses = $client->getResponses();
-
+            Util::generateFile( 'SENT: '.$userFrom->registrationId, 'a' );
             // ACESSA A ÚNICA POSIÇÃO POSSÍVEL, PRIMEIRA POSIÇÃO
             foreach( $responses as $response ){
                 $response = json_decode( $response->getContent() );
@@ -391,5 +442,9 @@ class AplUser {
                     }
                 }
             }
+        }
+
+        static public function getMessageUser( $message, $isUserFrom=true ){
+            return( CgdUser::getMessageUser( $message, $isUserFrom ) );
         }
 }

@@ -1,1 +1,226 @@
-128 - 3 - 5
+CHEGUEI
+CHEGUEI
+CHEGUEI
+CHEGUEI
+ON MESSAGE
+1 - Recieved message from GCM -1441666137 -  - {"jsonObject":"{\"message\":{\"message\":\"cfgn\",\"userFrom\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"userTo\":{\"nickname\":\"Android 4.4\",\"notificationConf\":{\"time\":0,\"status\":0},\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"id\":0,\"regTime\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+NEW MESSAGE
+ID: 1441666137
+USER FROM: 15
+USER TO: 16
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441666137
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441666137
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.52315600 1441666140-1441666137 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h","original_message_id":"0.52315600 1441666140-1441666137","message_sent_timestamp":"1441666140884"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.52315600 1441666140-1441666137
+USER FROM: 15
+USER TO: 16
+FAKE ID: 0.52315600 1441666140-1441666137
+SEND: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+SENT: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ON MESSAGE
+1 - Recieved message from GCM -1441666143 -  - {"jsonObject":"{\"message\":{\"userTo\":{\"notificationConf\":{\"time\":0,\"status\":0},\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"message\":\"dfbdfbdfb\",\"userFrom\":{\"nickname\":\"Android 4.4\",\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"regTime\":0,\"id\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+NEW MESSAGE
+ID: 1441666143
+USER FROM: 16
+USER TO: 15
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441666143
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441666143
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.30570100 1441666143-1441666143 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH","original_message_id":"0.30570100 1441666143-1441666143","message_sent_timestamp":"1441666143694"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.30570100 1441666143-1441666143
+USER FROM: 16
+USER TO: 15
+FAKE ID: 0.30570100 1441666143-1441666143
+SEND: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+SENT: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ON MESSAGE
+1 - Recieved message from GCM -1441664733 -  - {"jsonObject":"{\"message\":{\"message\":\"fgh dfgh \",\"userFrom\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"userTo\":{\"nickname\":\"Android 4.4\",\"notificationConf\":{\"time\":0,\"status\":0},\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"id\":0,\"regTime\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+NEW MESSAGE
+ID: 1441664733
+USER FROM: 15
+USER TO: 16
+ON MESSAGE
+1 - Recieved message from GCM -1441666285 -  - {"jsonObject":"{\"message\":{\"message\":\"g dfghdfgh\",\"userFrom\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"userTo\":{\"nickname\":\"Android 4.4\",\"notificationConf\":{\"time\":0,\"status\":0},\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"id\":0,\"regTime\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+NEW MESSAGE
+ID: 1441666285
+USER FROM: 15
+USER TO: 16
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441666285
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441666285
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.97542500 1441666287-1441666285 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h","original_message_id":"0.97542500 1441666287-1441666285","message_sent_timestamp":"1441666288335"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.97542500 1441666287-1441666285
+USER FROM: 15
+USER TO: 16
+FAKE ID: 0.97542500 1441666287-1441666285
+SEND: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+SENT: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ON MESSAGE
+1 - Recieved message from GCM -1441666293 -  - {"jsonObject":"{\"message\":{\"userTo\":{\"notificationConf\":{\"time\":0,\"status\":0},\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"message\":\"dfgh dfgh df\",\"userFrom\":{\"nickname\":\"Android 4.4\",\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"regTime\":0,\"id\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+NEW MESSAGE
+ID: 1441666293
+USER FROM: 16
+USER TO: 15
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441666293
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441666293
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.26047500 1441666293-1441666293 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH","original_message_id":"0.26047500 1441666293-1441666293","message_sent_timestamp":"1441666293634"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.26047500 1441666293-1441666293
+USER FROM: 16
+USER TO: 15
+FAKE ID: 0.26047500 1441666293-1441666293
+SEND: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+SENT: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+CHEGUEI
+ON MESSAGE
+1 - Recieved message from GCM -1441668274 -  - {"jsonObject":"{\"message\":{\"message\":\"cfg fg h\",\"userFrom\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"userTo\":{\"nickname\":\"Android 4.4\",\"notificationConf\":{\"time\":0,\"status\":0},\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"id\":0,\"regTime\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+NEW MESSAGE
+ID: 1441668274
+USER FROM: 15
+USER TO: 16
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441668274
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441668274
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.30740200 1441668277-1441668274 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h","original_message_id":"0.30740200 1441668277-1441668274","message_sent_timestamp":"1441668277710"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.30740200 1441668277-1441668274
+USER FROM: 15
+USER TO: 16
+FAKE ID: 0.30740200 1441668277-1441668274
+SEND: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+SENT: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ON MESSAGE
+1 - Recieved message from GCM -1441668286 -  - {"jsonObject":"{\"message\":{\"message\":\"cfg hdfg hd\",\"userFrom\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"userTo\":{\"nickname\":\"Android 4.4\",\"notificationConf\":{\"time\":0,\"status\":0},\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"id\":0,\"regTime\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+NEW MESSAGE
+ID: 1441668286
+USER FROM: 15
+USER TO: 16
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441668286
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441668286
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.35048300 1441668289-1441668286 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h","original_message_id":"0.35048300 1441668289-1441668286","message_sent_timestamp":"1441668289710"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.35048300 1441668289-1441668286
+USER FROM: 15
+USER TO: 16
+FAKE ID: 0.35048300 1441668289-1441668286
+SEND: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+SENT: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+CHEGUEI
+CHEGUEI
+ON MESSAGE
+1 - Recieved message from GCM -1441668314 -  - {"jsonObject":"{\"message\":{\"userTo\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"message\":\"cgn dfghfgd h\",\"userFrom\":{\"notificationConf\":{\"time\":0,\"status\":0},\"nickname\":\"Android 4.4\",\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"regTime\":0,\"id\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+NEW MESSAGE
+ID: 1441668314
+USER FROM: 16
+USER TO: 15
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441668314
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441668314
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.10050300 1441668314-1441668314 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH","original_message_id":"0.10050300 1441668314-1441668314","message_sent_timestamp":"1441668314495"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.10050300 1441668314-1441668314
+USER FROM: 16
+USER TO: 15
+FAKE ID: 0.10050300 1441668314-1441668314
+SEND: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+SENT: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ON MESSAGE
+1 - Recieved message from GCM -1441668320 -  - {"jsonObject":"{\"message\":{\"message\":\"fh fgdh \",\"userFrom\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"userTo\":{\"nickname\":\"Android 4.4\",\"notificationConf\":{\"time\":0,\"status\":0},\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"id\":0,\"regTime\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+NEW MESSAGE
+ID: 1441668320
+USER FROM: 15
+USER TO: 16
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441668320
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441668320
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.81031000 1441668322-1441668320 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h","original_message_id":"0.81031000 1441668322-1441668320","message_sent_timestamp":"1441668323175"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.81031000 1441668322-1441668320
+USER FROM: 15
+USER TO: 16
+FAKE ID: 0.81031000 1441668322-1441668320
+SEND: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+SENT: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+1 - Daemon has been disconected
+CHEGUEI
+1 - Ready / Auth success. Waiting for Messages
+ON MESSAGE
+1 - Recieved message from GCM -1441668330 -  - {"jsonObject":"{\"message\":{\"message\":\"fgh dfg hdf hg\",\"userFrom\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"userTo\":{\"nickname\":\"Android 4.4\",\"notificationConf\":{\"time\":0,\"status\":0},\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"id\":0,\"regTime\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+NEW MESSAGE
+ID: 1441668330
+USER FROM: 15
+USER TO: 16
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441668330
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441668330
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.87749600 1441668332-1441668330 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h","original_message_id":"0.87749600 1441668332-1441668330","message_sent_timestamp":"1441668333238"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.87749600 1441668332-1441668330
+USER FROM: 15
+USER TO: 16
+FAKE ID: 0.87749600 1441668332-1441668330
+SEND: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+SENT: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+CHEGUEI
+ON MESSAGE
+1 - Recieved message from GCM -1441668642 -  - {"jsonObject":"{\"message\":{\"message\":\"cg fcgh \",\"userFrom\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"userTo\":{\"nickname\":\"Android 4.4\",\"notificationConf\":{\"time\":0,\"status\":0},\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"id\":0,\"regTime\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+NEW MESSAGE
+ID: 1441668642
+USER FROM: 15
+USER TO: 16
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441668642
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441668642
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.21760100 1441668645-1441668642 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h","original_message_id":"0.21760100 1441668645-1441668642","message_sent_timestamp":"1441668645818"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.21760100 1441668645-1441668642
+USER FROM: 15
+USER TO: 16
+FAKE ID: 0.21760100 1441668645-1441668642
+SEND: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+SENT: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ON MESSAGE
+1 - Recieved message from GCM -1441668323 -  - {"jsonObject":"{\"message\":{\"message\":\"dfgh dfg \",\"userFrom\":{\"nickname\":\"Android 5.0\",\"isTyping\":false,\"id\":15,\"numberNewMessages\":0},\"userTo\":{\"nickname\":\"Android 4.4\",\"notificationConf\":{\"time\":0,\"status\":0},\"isTyping\":false,\"id\":16,\"numberNewMessages\":0},\"id\":0,\"regTime\":0,\"wasRead\":0},\"method\":\"get-messages\"}"} - fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+NEW MESSAGE
+ID: 1441668323
+USER FROM: 15
+USER TO: 16
+SEND TO: cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h
+ID MSG: 1441668323
+SEND TO: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+ID MSG: 1441668323
+ON MESSAGE
+1 - Recieved message from GCM -dr2:0.40540400 1441669806-1441668323 - receipt - {"message_status":"MESSAGE_SENT_TO_DEVICE","device_registration_id":"cExnzbBCpw8:APA91bE7RHsfTQd1BIdOSB8qnS9Y_xNYr-bDYXvXOKSI2_DUl3Woykgocd4X_OhNYkYH4jBaiAZUYoyc2aeagsWuTjyw0um1zIpw2NbvH_elJ76QQn4dXmAnYVCOR0ZaPO102vVvpZ0h","original_message_id":"0.40540400 1441669806-1441668323","message_sent_timestamp":"1441669806793"} - gcm.googleapis.com
+ACK SCRIPT
+ID: dr2:0.40540400 1441669806-1441668323
+USER FROM: 15
+USER TO: 16
+FAKE ID: 0.40540400 1441669806-1441668323
+SEND: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH
+SENT: fvNldbmlmIQ:APA91bERbuJOfeuCyAkGht_FHeZe2uBolrvEXLrNR12b-XKBlg_ZUDXERNKesw-Dn_1yZZ8Wtu1bDGofBFbnkmAg4O6TjIWU-mhiQSz5dCJxp_mBX0N7j0pLtIVW0UAUwsZO-4iK-atH

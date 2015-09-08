@@ -111,5 +111,146 @@
             "notifications",
             "push"
         ]
+    },
+    {
+        "name": "abhinavsingh/jaxl",
+        "version": "v3.0.0",
+        "version_normalized": "3.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jaxl/JAXL.git",
+            "reference": "7e1f1d8841e6214f73492a5693f97fb7424ad9f6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jaxl/JAXL/zipball/7e1f1d8841e6214f73492a5693f97fb7424ad9f6",
+            "reference": "7e1f1d8841e6214f73492a5693f97fb7424ad9f6",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.4"
+        },
+        "time": "2012-11-15 18:29:58",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "jaxl.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Abhinavsingh",
+                "homepage": "https://github.com/abhinavsingh"
+            }
+        ],
+        "description": "jaxl - Jabber XMPP Client Library in PHP.",
+        "homepage": "http://jaxl.readthedocs.org/en/latest/index.html",
+        "keywords": [
+            "abhinavsingh",
+            "jabber",
+            "jaxl",
+            "xmpp"
+        ]
+    },
+    {
+        "name": "nette/utils",
+        "version": "v2.2.7",
+        "version_normalized": "2.2.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nette/utils.git",
+            "reference": "1d980850f42652bc41cdc2b46789b015d772871b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nette/utils/zipball/1d980850f42652bc41cdc2b46789b015d772871b",
+            "reference": "1d980850f42652bc41cdc2b46789b015d772871b",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.1"
+        },
+        "conflict": {
+            "nette/nette": "<2.2"
+        },
+        "require-dev": {
+            "nette/tester": "~1.0"
+        },
+        "suggest": {
+            "ext-gd": "to use Image",
+            "ext-iconv": "to use Strings::webalize() and toAscii()",
+            "ext-mbstring": "to use Strings::lower() etc..."
+        },
+        "time": "2015-08-05 10:38:03",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause",
+            "GPL-2.0",
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "David Grudl",
+                "homepage": "http://davidgrudl.com"
+            },
+            {
+                "name": "Nette Community",
+                "homepage": "http://nette.org/contributors"
+            }
+        ],
+        "description": "Nette Utility Classes",
+        "homepage": "http://nette.org"
+    },
+    {
+        "name": "petrsladek/gcm",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PetrSladek/Gcm.git",
+            "reference": "d9e3ac93af535624ec177d060c341f5e7a1c6824"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PetrSladek/Gcm/zipball/d9e3ac93af535624ec177d060c341f5e7a1c6824",
+            "reference": "d9e3ac93af535624ec177d060c341f5e7a1c6824",
+            "shasum": ""
+        },
+        "require": {
+            "abhinavsingh/jaxl": "3.0.0",
+            "nette/utils": "~2.2.0",
+            "php": ">= 5.3.7"
+        },
+        "time": "2015-08-27 08:26:17",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "proprietary"
+        ],
+        "authors": [
+            {
+                "name": "Petr Sladek",
+                "email": "petr.sladek@skaut.cz"
+            }
+        ],
+        "description": "Google Cloud Messaging PHP library. Sender for sending Messages over HTTP amd Deamon for sending and recieving messages over XMPP (CCS)."
     }
 ]

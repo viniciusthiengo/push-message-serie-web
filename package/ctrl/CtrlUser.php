@@ -4,6 +4,13 @@
     require_once('../../autoload.php');
     require_once('../../vendor/autoload.php');
 
+use Gcm\Xmpp\Daemon;
+
+Util::generateFile("CHEGUEI", 'a');
+    /*if (!ini_get('display_errors')) {
+        ini_set('display_errors', 1);
+    }*/
+
 
 
 
@@ -13,7 +20,6 @@
 
         // REGISTER USER
         if( strcasecmp($jsonObject->method, User::METHOD_SAVE) == 0 ){
-
             $user = new User();
             $user->registrationId = $jsonObject->user->registrationId;
             $user->nickname = $jsonObject->user->nickname;
@@ -145,4 +151,93 @@
         $pushMessage = new PushMessage('Title', 'Message area.');
 
         AplUser::sendPushMessage( $pushMessage, $user );
+    }
+
+
+    else if( strcasecmp($_GET['method'], 'DAEMON') == 0 ){
+
+        $daemon = new Daemon(__SENDER_ID__, __API_KEY__, $testMode = false);
+
+        $daemon->onReady[] = function(Daemon $daemon) {
+            Util::generateFile( "1 - Ready / Auth success. Waiting for Messages", 'a' );
+        };
+        $daemon->onAuthFailure[] = function(Daemon $daemon, $reason) {
+            Util::generateFile( "1 - Auth failure (reason $reason)", 'a' );
+        };
+        $daemon->onStop[] = function(Daemon $daemon) {
+            Util::generateFile( "1 - Daemon has stopped by", 'a' );
+        };
+        $daemon->onDisconnect[] = function(Daemon $daemon) {
+            Util::generateFile( "1 - Daemon has been disconected", 'a' );
+            header("Location: http://localhost:8888/PushMessageSerie/package/ctrl/CtrlUser.php?method=DAEMON");
+        };
+        $daemon->onAllSent[] = function(Gcm\Xmpp\Daemon $daemon, $countMessages) {
+            Util::generateFile( "1 - Has been sent all of $countMessages", 'a');
+        };
+        $daemon->onMessage[] = function(Daemon $daemon, \Gcm\RecievedMessage $message) {
+            Util::generateFile( "ON MESSAGE", 'a' );
+            Util::generateFile( "1 - Recieved message from GCM -".$message->getMessageId().' - '.$message->getMessageType().' - '.json_encode($message->getData()).' - '.$message->getFrom(), 'a' );
+
+            if( strcasecmp( $message->getMessageType(), 'control' ) == 0 ){
+                // OPEN NEW CONNECTION
+            }
+
+            // WAS READ MESSAGE ON TIME MESSAGE WAS SENT
+            else if( strcasecmp( $message->getMessageType(), 'receipt' ) == 0 ){
+
+                if( strcasecmp( $message->getData()->message_status, 'MESSAGE_SENT_TO_DEVICE' ) == 0 ){
+                    Util::generateFile( "ACK SCRIPT", 'a' );
+                    Util::generateFile( "ID: ".$message->getMessageId(), 'a' );
+
+                    $id = explode('-', $message->getData()->original_message_id);
+                    $m = new Message( $id[ count($id) - 1 ] );
+
+                    $m->userFrom = AplUser::getMessageUser( $m, true );
+                    $m->userTo = AplUser::getMessageUser( $m, false );
+
+                    $m->ackId = $message->getData()->original_message_id;
+
+                    Util::generateFile( "USER FROM: ".$m->userFrom->id, 'a' );
+                    Util::generateFile( "USER TO: ".$m->userTo->id, 'a' );
+
+                    AplUser::updateMessages( array( $m ), $daemon );
+                }
+            }
+            else{
+                $jsonObject = json_decode( $message->getData()->jsonObject );
+
+                // WAS READ MESSAGE - LATER IN LIST
+                if( strcasecmp($jsonObject->method, Message::METHOD_UPDATE_MESSAGES) == 0 ){
+                    Util::generateFile( "UPDATE MESSAGES - WAS READ", 'a' );
+
+                    Util::generateFile( "AMOUNT: ".count($jsonObject->messages), 'a' );
+                    $messages = $jsonObject->messages;
+
+                    AplUser::updateMessages( $messages, $daemon );
+                }
+
+                // NEW MESSAGE
+                else{
+                    Util::generateFile( "NEW MESSAGE", 'a' );
+                    Util::generateFile( "ID: ".$message->getMessageId(), 'a' );
+
+                    $message = new Message( $message->getMessageId() );
+                    $message->message = $jsonObject->message->message;
+                    $message->regTime = time();
+                    $message->ackId = (string) microtime().'-'.$message->id;
+
+                    $message->userFrom = new User();
+                    $message->userFrom->id = $jsonObject->message->userFrom->id;
+                    Util::generateFile( "USER FROM: ".$jsonObject->message->userFrom->id, 'a' );
+
+                    $message->userTo = new User();
+                    $message->userTo->id = $jsonObject->message->userTo->id;
+                    Util::generateFile( "USER TO: ".$jsonObject->message->userTo->id, 'a' );
+
+                    AplUser::saveMessage( $message, $daemon );
+                }
+            }
+        };
+
+        $daemon->run();
     }

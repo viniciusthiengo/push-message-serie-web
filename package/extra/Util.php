@@ -7,9 +7,9 @@
  */
 
 class Util {
-    public static function generateFile($content, $mode='w'){
-        $handle = fopen( '../../data.txt', $mode );
-        fwrite($handle, $content);
+    public static function generateFile($content, $mode='w', $filename='data.txt'){
+        $handle = fopen( '../../'.$filename, $mode );
+        fwrite($handle, $content."\n");
         fclose($handle);
     }
 }

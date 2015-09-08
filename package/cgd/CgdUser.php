@@ -301,21 +301,27 @@ SQL;
             {
                 $query = <<<SQL
                     insert into
-                      tcc_message(id_user_from,
+                      tcc_message(id,
+                                  id_user_from,
                                   id_user_to,
                                   message,
+                                  id_ack,
                                   reg_time)
-                      values (:id_user_from,
+                      values (:id,
+                              :id_user_from,
                               :id_user_to,
                               :message,
+                              :id_ack,
                               :reg_time)
 SQL;
                 //exit( $query );
                 $database = (new Database())->getConn();
                 $statement = $database->prepare($query);
+                $statement->bindValue(':id', $message->id, PDO::PARAM_INT);
                 $statement->bindValue(':id_user_from', $message->userFrom->id, PDO::PARAM_INT);
                 $statement->bindValue(':id_user_to', $message->userTo->id, PDO::PARAM_INT);
                 $statement->bindValue(':message', $message->message, PDO::PARAM_STR);
+                $statement->bindValue(':id_ack', $message->ackId, PDO::PARAM_STR);
                 $statement->bindValue(':reg_time', $message->regTime, PDO::PARAM_INT);
                 $statement->execute();
                 $database = null;
@@ -339,6 +345,7 @@ SQL;
                           limit 1
 SQL;
                 //exit( $query );
+                //Util::generateFile($message->id.' - '.$message->wasRead.' - '.$message->userTo->id.' - '.$message->ususerFromerTo->id, 'a');
                 $database = (new Database())->getConn();
                 $statement = $database->prepare($query);
                 $statement->bindValue(':id', $message->id, PDO::PARAM_INT);
@@ -394,7 +401,7 @@ SQL;
                                     and
                                     tm.was_read = 0
                                   order by
-                                    tm.id desc
+                                    tm.reg_time desc
 SQL;
                 //exit( $query );
                 $database = (new Database())->getConn();
@@ -424,6 +431,7 @@ SQL;
                 $query = <<<SQL
                             select
                               id,
+                              id_ack,
                               message,
                               reg_time,
                               was_read,
@@ -447,7 +455,7 @@ SQL;
                                     )
                                 )
                               order by
-                                id desc
+                                reg_time desc
                               limit :limit
 SQL;
                 //exit( $query );
@@ -466,6 +474,7 @@ SQL;
                 while( ( $data = $statement->fetchObject() ) !== false ){
                     $aux = new Message();
                     $aux->id = $data->id;
+                    $aux->ackId = $data->id_ack;
                     $aux->message = $data->message;
                     $aux->regTime = $data->reg_time;
                     $aux->wasRead = $data->was_read;
@@ -527,5 +536,33 @@ SQL;
                 $database = null;
 
                 return( $statement->rowCount() > 0 );
+            }
+
+            static public function getMessageUser( $message, $isUserFrom=true )
+            {
+                $data = [];
+                $data[] = $isUserFrom ? 'id_user_from' : 'id_user_to';
+                $query = <<<SQL
+                    select
+                      {$data[0]}
+                      from
+                        tcc_message
+                      where
+                        id = :id
+                      limit 1
+SQL;
+                //exit( $query );
+                $database = (new Database())->getConn();
+                $statement = $database->prepare($query);
+                $statement->bindValue(':id', $message->id, PDO::PARAM_INT);
+                $statement->execute();
+                $database = null;
+
+                $user = null;
+                if( $statement->rowCount() > 0 ){
+                    $data = $statement->fetchColumn(0);
+                    $user = new User( $data );
+                }
+                return( $user );
             }
     }

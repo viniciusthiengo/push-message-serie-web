@@ -2,23 +2,32 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/vendor/abhinavsingh/jaxl" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/endroid/gcm" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kriswallsmith/buzz" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nette/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/petrsladek/gcm" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="PHP">
         <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/nette/utils" />
+          <root url="file://$MODULE_DIR$/vendor/endroid/gcm" />
+          <root url="file://$MODULE_DIR$/vendor/abhinavsingh/jaxl" />
+          <root url="file://$MODULE_DIR$/vendor/petrsladek/gcm" />
           <root url="file://$MODULE_DIR$/vendor/composer" />
           <root url="file://$MODULE_DIR$/vendor/kriswallsmith/buzz" />
-          <root url="file://$MODULE_DIR$/vendor/endroid/gcm" />
         </CLASSES>
         <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/nette/utils" />
+          <root url="file://$MODULE_DIR$/vendor/endroid/gcm" />
+          <root url="file://$MODULE_DIR$/vendor/abhinavsingh/jaxl" />
+          <root url="file://$MODULE_DIR$/vendor/petrsladek/gcm" />
           <root url="file://$MODULE_DIR$/vendor/composer" />
           <root url="file://$MODULE_DIR$/vendor/kriswallsmith/buzz" />
-          <root url="file://$MODULE_DIR$/vendor/endroid/gcm" />
         </SOURCES>
       </library>
     </orderEntry>
