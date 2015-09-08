@@ -5,6 +5,9 @@
 
 use Endroid\Gcm\Client;
 
+//use Gcm\Xmpp\Daemon;
+//use Gcm\Message;
+
 class AplUser {
     public function __construct(){}
     public function __destruct(){}
@@ -115,7 +118,7 @@ class AplUser {
 
 
     // MESSAGE
-        static public function saveMessage( Message $message )
+        static public function saveMessage( Message $message, $daemon=null )
         {
             $result = CgdUser::saveMessage( $message );
 
@@ -132,13 +135,95 @@ class AplUser {
 
                 $message->userFrom = CgdUser::getUser($message->userFrom);
 
-                AplUser::sendPushMessageNewMessage( $message, $message->userFrom, $message->userTo );
+                AplUser::sendPushMessageNewMessage_AwsSns( $message, $message->userFrom, $message->userTo );
+
+                //AplUser::sendPushMessageNewMessage( $message, $message->userFrom, $message->userTo );
+
+                //AplUser::sendPushMessageNewMessage_XMPP( $daemon, $message, $message->userFrom, $message->userTo );
+                //AplUser::sendPushMessageNewMessage_XMPP( $daemon, $message, $message->userFrom, $message->userTo, true );
+
             }
 
             return( $result );
         }
 
-        static public function sendPushMessageNewMessage( Message $message, User $userFrom, User $userTo )
+
+        // PUSH MESSAGE
+            static public function sendPushMessageNewMessage_AwsSns( Message $message, User $userFrom, User $userTo )
+            {
+                // GCM SENDER
+                $client = new AwsSns();
+
+                $data = [
+                    'data'=>[
+                        'type' => "1",
+                        'id' => "".$message->id,
+                        'title' => 'Mensagem de: '.$userFrom->nickname,
+                        'message' => $message->message,
+                        'regTime' => "".($message->regTime * 1000),
+                        'userFrom_id' => "".$userFrom->id,
+                        'userFrom_nickname' => $userFrom->nickname,
+                        'userTo_id' => "".$userTo->id,
+                        'userTo_nickname' => $userTo->nickname,
+                        'userTo_notification_status' => "".$userTo->notificationConf->status,
+                        'userTo_notification_time' => "".($userTo->notificationConf->time * 1000),
+                        'userTo_new_messages' => "".json_encode(["messages"=>$userTo->getMessages() ]),
+                        'userTo_amount_new_messages' => "".count($userTo->messages)
+                    ],
+                    'collapse_key'=>'newMessage',
+                    'delay_while_idle'=>'false',
+                    'time_to_live'=>"".(4 * 7 * 24 * 60 * 60),
+                    'restricted_package_name'=>'br.com.thiengo.gcmexample',
+                    'dry_run'=>'false'
+                ];
+
+                $dataGcm = [
+                    'TargetArn' => $client->getEndpointArn( $userFrom->registrationId ),
+                    'MessageStructure' => 'json',
+                    'Message' => json_encode([
+                        'GCM'=>json_encode( $data )
+                    ])
+                ];
+
+                $result = $client->sns->publish( $dataGcm );
+                Util::generateFile('UserFrom MessageId: '.$result->get('MessageId'), 'a');
+
+                $dataGcm['TargetArn'] = $client->getEndpointArn($userTo->registrationId);
+                $result = $client->sns->publish( $dataGcm );
+                Util::generateFile('UserTo MessageId: '.$result->get('MessageId'), 'a');
+            }
+
+            static public function sendPushMessageNewMessage_XMPP( $daemon, Message $msg, User $userFrom, User $userTo, $isUserFromMain=false )
+            {
+                $userToRegId = $isUserFromMain ? $userFrom->registrationId : $userTo->registrationId;
+                $payload = array(
+                    'type' => 1,
+                    'id' => $msg->id,
+                    'title' => 'Mensagem de: '.$userFrom->nickname,
+                    'message' => $msg->message,
+                    'regTime' => $msg->regTime * 1000,
+                    'userFrom_id' => $userFrom->id,
+                    'userFrom_nickname' => $userFrom->nickname,
+                    'userTo_id' => $userTo->id,
+                    'userTo_nickname' => $userTo->nickname,
+                    'userTo_notification_status' => $userTo->notificationConf->status,
+                    'userTo_notification_time' => ($userTo->notificationConf->time * 1000),
+                    'userTo_new_messages' => json_encode(["messages"=>$userTo->getMessages() ]),
+                    'userTo_amount_new_messages' => count($userTo->messages),
+                );
+
+                Util::generateFile("SEND TO: ".$userToRegId, 'a');
+                Util::generateFile("ID MSG: ".$msg->id, 'a');
+
+                $message = new \Gcm\Message( $userToRegId, $payload, "newMessage");
+                $message->setMessageId( $isUserFromMain ? '' : $msg->ackId );
+                $message->setTimeToLive( 60 );
+                $message->setDeliveryReceiptRequested( ! $isUserFromMain );
+
+                $daemon->send($message);
+            }
+
+            static public function sendPushMessageNewMessage( Message $message, User $userFrom, User $userTo )
         {
             // GCM SENDER
             $client = new Client(__API_KEY__);
@@ -146,7 +231,7 @@ class AplUser {
             // REGISTRATION IDS IN ARRAY
             $registrationIds = [];
             $registrationIds[] = $userFrom->registrationId;
-            $registrationIds[] = $userTo->registrationId;
+            //$registrationIds[] = $userTo->registrationId;
 
             $data = array(
                 'type' => 1,
@@ -213,6 +298,7 @@ class AplUser {
             }
         }
 
+
         static public function getNewMessagesSummary( $user ){
             $messages = CgdUser::getNewMessagesSummary( $user );
             return($messages);
@@ -240,76 +326,126 @@ class AplUser {
             return( $messageArray );
         }
 
-        static public function updateMessages( $messages )
+        static public function updateMessages( $messages, $daemon=null )
         {
             foreach( $messages as $value ){
-
                 $value->wasRead = 1;
                 $result = CgdUser::updateMessageWasRead( $value );
 
                 if( $result ){
                     $value->userFrom = CgdUser::getUser($value->userFrom);
-                    sleep(2);
-                    AplUser::sendPushMessageWasRead( $value,
+
+                    AplUser::sendPushMessageWasRead_AwsSns( $value,
                         $value->userFrom,
                         $value->userTo );
+
+                    /*if( !is_null($daemon) ){
+                        Util::generateFile( 'FAKE ID: '.$value->ackId, 'a' );
+
+                        $recievedMessage = new \Gcm\RecievedMessage( '',
+                            '',
+                            0,
+                            'dr2:'.$value->ackId,
+                            $value->userFrom->registrationId,
+                            '');
+
+                        $daemon->sendAck( $recievedMessage);
+                    }*/
+
+                    /*AplUser::sendPushMessageWasRead( $value,
+                        $value->userFrom,
+                        $value->userTo );*/
                 }
             }
         }
 
-        static public function sendPushMessageWasRead( $message, $userFrom, $userTo )
-        {
-            // GCM SENDER
-            $client = new Client(__API_KEY__);
 
-            // REGISTRATION IDS IN ARRAY
-            $registrationIds = [];
-            $registrationIds[] = $userFrom->registrationId;
+        // PUSH MESSAGE
+            static public function sendPushMessageWasRead_AwsSns( $message, $userFrom, $userTo )
+            {
+                // GCM SENDER
+                $client = new AwsSns();
 
-            $data = array(
-                'type' => 2,
-                'id' => $message->id,
-                'userFrom_id' => $userFrom->id,
-                'userTo_id' => $userTo->id
-            );
+                $data = [
+                    'data'=>[
+                        'type' => '2',
+                        'id' => "".$message->id,
+                        'userFrom_id' => "".$userFrom->id,
+                        'userTo_id' => "".$userTo->id
+                    ],
+                    'collapse_key'=>'messageWasRead',
+                    'delay_while_idle'=>'false',
+                    'time_to_live'=>"".(4 * 7 * 24 * 60 * 60),
+                    'restricted_package_name'=>'br.com.thiengo.gcmexample',
+                    'dry_run'=>'false'
+                ];
 
-            $options = [
-                'collapse_key'=>'messageWasRead',
-                'delay_while_idle'=>false,
-                'time_to_live'=>(4 * 7 * 24 * 60 * 60),
-                'restricted_package_name'=>'br.com.thiengo.gcmexample',
-                'dry_run'=>false
-            ];
+                $dataGcm = [
+                    'TargetArn' => $client->getEndpointArn($userFrom->registrationId),
+                    'MessageStructure' => 'json',
+                    'Message' => json_encode([
+                        'GCM'=>json_encode( $data )
+                    ])
+                ];
 
-            $client->send( $data, $registrationIds, $options ); // ENVIA A PUSH MESSAGE
-            $responses = $client->getResponses();
+                $result = $client->sns->publish( $dataGcm );
+            }
 
-            // ACESSA A ÚNICA POSIÇÃO POSSÍVEL, PRIMEIRA POSIÇÃO
-            foreach( $responses as $response ){
-                $response = json_decode( $response->getContent() );
+            static public function sendPushMessageWasRead( $message, $userFrom, $userTo )
+            {
+                // GCM SENDER
+                $client = new Client(__API_KEY__);
 
-                // VERIFICA SE HÁ ALGUM CANONICAL_ID, QUE INDICA QUE AO MENOS UM REGISTRATION_ID DEVE SER ATUALIZADO
-                if( $response->canonical_ids > 0 || $response->failure > 0 ){
+                // REGISTRATION IDS IN ARRAY
+                $registrationIds = [];
+                $registrationIds[] = $userFrom->registrationId;
 
-                    // PERCORRE TODOS OS RESULTADOS VERIFICANDO SE HÁ UM REGISTRATION_ID PARA SER ALTERADO
-                    for( $i = 0, $tamI = count( $response->results ); $i < $tamI; $i++ ){
+                $data = array(
+                    'type' => 2,
+                    'id' => $message->id,
+                    'userFrom_id' => $userFrom->id,
+                    'userTo_id' => $userTo->id
+                );
 
-                        if( !empty( $response->results[$i]->canonical_id ) ){
+                $options = [
+                    'collapse_key'=>'messageWasRead',
+                    'delay_while_idle'=>false,
+                    'time_to_live'=>(4 * 7 * 24 * 60 * 60),
+                    'restricted_package_name'=>'br.com.thiengo.gcmexample',
+                    'dry_run'=>false
+                ];
+                Util::generateFile( 'SEND: '.$userFrom->registrationId, 'a' );
 
-                            // SE HÁ UM NOVO REGISTRATION_ID, ENTÃO ALTERANO BD
-                            $userFrom->registrationId = $response->results[$i]->canonical_id;
-                            CgdUser::updateRegistrationId( $userFrom );
+                $client->send( $data, $registrationIds, $options ); // ENVIA A PUSH MESSAGE
+                $responses = $client->getResponses();
+                Util::generateFile( 'SENT: '.$userFrom->registrationId, 'a' );
+                // ACESSA A ÚNICA POSIÇÃO POSSÍVEL, PRIMEIRA POSIÇÃO
+                foreach( $responses as $response ){
+                    $response = json_decode( $response->getContent() );
 
-                        }
-                        else if( strcasecmp( $response->results[$i]->error, "NotRegistered" ) == 0 ){
+                    // VERIFICA SE HÁ ALGUM CANONICAL_ID, QUE INDICA QUE AO MENOS UM REGISTRATION_ID DEVE SER ATUALIZADO
+                    if( $response->canonical_ids > 0 || $response->failure > 0 ){
 
-                            // DELETE REGISTRO DO BD
-                            CgdUser::deleteUser( $userFrom );
+                        // PERCORRE TODOS OS RESULTADOS VERIFICANDO SE HÁ UM REGISTRATION_ID PARA SER ALTERADO
+                        for( $i = 0, $tamI = count( $response->results ); $i < $tamI; $i++ ){
+
+                            if( !empty( $response->results[$i]->canonical_id ) ){
+
+                                // SE HÁ UM NOVO REGISTRATION_ID, ENTÃO ALTERANO BD
+                                $userFrom->registrationId = $response->results[$i]->canonical_id;
+                                CgdUser::updateRegistrationId( $userFrom );
+
+                            }
+                            else if( strcasecmp( $response->results[$i]->error, "NotRegistered" ) == 0 ){
+
+                                // DELETE REGISTRO DO BD
+                                CgdUser::deleteUser( $userFrom );
+                            }
                         }
                     }
                 }
             }
-        }
+
 
         static public function removeMessage( $message )
         {
@@ -319,77 +455,133 @@ class AplUser {
                 $message->userFrom = CgdUser::getUser( $message->userFrom );
                 $message->userTo = CgdUser::getUser( $message->userTo );
 
-                AplUser::sendMessageRemoved( $message,
+                AplUser::sendMessageRemoved_AwsSns( $message,
                     $message->userFrom,
                     $message->userTo );
+
+                /*AplUser::sendMessageRemoved( $message,
+                    $message->userFrom,
+                    $message->userTo );*/
             }
 
             return( $result );
         }
 
-        static public function sendMessageRemoved( $message, $userFrom, $userTo )
-        {
-            // GCM SENDER
-            $client = new Client(__API_KEY__);
 
-            // REGISTRATION IDS IN ARRAY
-            $registrationIds = [];
-            $registrationIds[] = $userFrom->registrationId;
-            $registrationIds[] = $userTo->registrationId;
+        // PUSH MESSAGE
+            static public function sendMessageRemoved_AwsSns( $message, $userFrom, $userTo )
+            {
+                // GCM SENDER
+                $client = new AwsSns();
 
-            $data = array(
-                'type' => 3,
-                'id' => $message->id,
-                'userFrom_id' => $userFrom->id,
-                'userTo_id' => $userTo->id
-            );
+                $data = [
+                    'data'=>[
+                        'type' => '3',
+                        'id' => "".$message->id,
+                        'userFrom_id' => "".$userFrom->id,
+                        'userTo_id' => "".$userTo->id
+                    ],
+                    'collapse_key'=>'messageRemoved',
+                    'delay_while_idle'=>'false',
+                    'time_to_live'=>"".(4 * 7 * 24 * 60 * 60),
+                    'restricted_package_name'=>'br.com.thiengo.gcmexample',
+                    'dry_run'=>'false'
+                ];
 
-            $options = [
-                'collapse_key'=>'messageRemoved',
-                'delay_while_idle'=>false,
-                'time_to_live'=>(4 * 7 * 24 * 60 * 60),
-                'restricted_package_name'=>'br.com.thiengo.gcmexample',
-                'dry_run'=>false
-            ];
+                $dataGcm = [
+                    'TargetArn' => $client->getEndpointArn($userFrom->registrationId),
+                    'MessageStructure' => 'json',
+                    'Message' => json_encode([
+                        'GCM'=>json_encode( $data )
+                    ])
+                ];
 
-            $client->send( $data, $registrationIds, $options ); // ENVIA A PUSH MESSAGE
-            $responses = $client->getResponses();
+                $result = $client->sns->publish( $dataGcm );
 
-            // ACESSA A ÚNICA POSIÇÃO POSSÍVEL, PRIMEIRA POSIÇÃO
-            foreach( $responses as $response ){
-                $response = json_decode( $response->getContent() );
+                try{
+                    if( !empty($userTo->registrationId) ){
 
-                // VERIFICA SE HÁ ALGUM CANONICAL_ID, QUE INDICA QUE AO MENOS UM REGISTRATION_ID DEVE SER ATUALIZADO
-                if( $response->canonical_ids > 0 || $response->failure > 0 ){
+                        $dataGcm['TargetArn'] = $client->getEndpointArn($userTo->registrationId.'654946546456875'); // .'654946546456875'
+                        $client->sns->publish( $dataGcm );
+                    }
+                }
+                catch( Exception $e ){
+                    if( substr_count( $e->getMessage(), "InvalidParameter" ) > 0 ){
+                        $userTo->registrationId = '';
+                        CgdUser::updateRegistrationId( $userTo );
+                    }
+                    Util::generateFile( $e->getCode().' |||| '.$e->getMessage() );
+                }
+            }
 
-                    // PERCORRE TODOS OS RESULTADOS VERIFICANDO SE HÁ UM REGISTRATION_ID PARA SER ALTERADO
-                    for( $i = 0, $tamI = count( $response->results ); $i < $tamI; $i++ ){
+            static public function sendMessageRemoved( $message, $userFrom, $userTo )
+            {
+                // GCM SENDER
+                $client = new Client(__API_KEY__);
 
-                        if( !empty( $response->results[$i]->canonical_id ) ){
+                // REGISTRATION IDS IN ARRAY
+                $registrationIds = [];
+                $registrationIds[] = $userFrom->registrationId;
+                $registrationIds[] = $userTo->registrationId;
 
-                            // SE HÁ UM NOVO REGISTRATION_ID, ENTÃO ALTERANO BD
-                            if( $i == 0 ){
-                                $userFrom->registrationId = $response->results[$i]->canonical_id;
-                                CgdUser::updateRegistrationId( $userFrom );
+                $data = array(
+                    'type' => 3,
+                    'id' => $message->id,
+                    'userFrom_id' => $userFrom->id,
+                    'userTo_id' => $userTo->id
+                );
+
+                $options = [
+                    'collapse_key'=>'messageRemoved',
+                    'delay_while_idle'=>false,
+                    'time_to_live'=>(4 * 7 * 24 * 60 * 60),
+                    'restricted_package_name'=>'br.com.thiengo.gcmexample',
+                    'dry_run'=>false
+                ];
+
+                $client->send( $data, $registrationIds, $options ); // ENVIA A PUSH MESSAGE
+                $responses = $client->getResponses();
+
+                // ACESSA A ÚNICA POSIÇÃO POSSÍVEL, PRIMEIRA POSIÇÃO
+                foreach( $responses as $response ){
+                    $response = json_decode( $response->getContent() );
+
+                    // VERIFICA SE HÁ ALGUM CANONICAL_ID, QUE INDICA QUE AO MENOS UM REGISTRATION_ID DEVE SER ATUALIZADO
+                    if( $response->canonical_ids > 0 || $response->failure > 0 ){
+
+                        // PERCORRE TODOS OS RESULTADOS VERIFICANDO SE HÁ UM REGISTRATION_ID PARA SER ALTERADO
+                        for( $i = 0, $tamI = count( $response->results ); $i < $tamI; $i++ ){
+
+                            if( !empty( $response->results[$i]->canonical_id ) ){
+
+                                // SE HÁ UM NOVO REGISTRATION_ID, ENTÃO ALTERANO BD
+                                if( $i == 0 ){
+                                    $userFrom->registrationId = $response->results[$i]->canonical_id;
+                                    CgdUser::updateRegistrationId( $userFrom );
+                                }
+                                else{
+                                    $userTo->registrationId = $response->results[$i]->canonical_id;
+                                    CgdUser::updateRegistrationId( $userTo );
+                                }
+
                             }
-                            else{
-                                $userTo->registrationId = $response->results[$i]->canonical_id;
-                                CgdUser::updateRegistrationId( $userTo );
-                            }
+                            else if( strcasecmp( $response->results[$i]->error, "NotRegistered" ) == 0 ){
 
-                        }
-                        else if( strcasecmp( $response->results[$i]->error, "NotRegistered" ) == 0 ){
-
-                            // DELETE REGISTRO DO BD
-                            if( $i == 0 ){
-                                CgdUser::deleteUser( $userFrom );
-                            }
-                            else{
-                                CgdUser::deleteUser( $userTo );
+                                // DELETE REGISTRO DO BD
+                                if( $i == 0 ){
+                                    CgdUser::deleteUser( $userFrom );
+                                }
+                                else{
+                                    CgdUser::deleteUser( $userTo );
+                                }
                             }
                         }
                     }
                 }
             }
+
+
+        static public function getMessageUser( $message, $isUserFrom=true ){
+            return( CgdUser::getMessageUser( $message, $isUserFrom ) );
         }
 }

@@ -1,1 +1,46 @@
-128 - 3 - 5
+0 |||| Error executing "CreatePlatformEndpoint" on "https://sns.sa-east-1.amazonaws.com"; AWS HTTP error: Client error: 400 InvalidParameter (client): Invalid parameter: Token Reason: Endpoint arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/1d631ea3-8efe-301d-b4fc-1d31e196be8c already exists with the same Token, but different attributes. - <ErrorResponse xmlns="http://sns.amazonaws.com/doc/2010-03-31/">
+  <Error>
+    <Type>Sender</Type>
+    <Code>InvalidParameter</Code>
+    <Message>Invalid parameter: Token Reason: Endpoint arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/1d631ea3-8efe-301d-b4fc-1d31e196be8c already exists with the same Token, but different attributes.</Message>
+  </Error>
+  <RequestId>85c5bf37-c1fc-5049-9188-f1473478eab4</RequestId>
+</ErrorResponse>
+
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/d7305c37-73bd-3f60-80df-573075692971
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/d7305c37-73bd-3f60-80df-573075692971
+UserFrom MessageId: 60bf2492-372c-51fa-a74a-6ae33fdcf739
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/1b3cf76e-05a9-3362-85ef-c14f2fa801a0
+UserTo MessageId: 1b190faa-fb2c-5e39-8e93-41dbf3dd28d8
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/d7305c37-73bd-3f60-80df-573075692971
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/1b3cf76e-05a9-3362-85ef-c14f2fa801a0
+UserFrom MessageId: 0757f430-08eb-5829-b82b-ba4101c24eea
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/d7305c37-73bd-3f60-80df-573075692971
+UserTo MessageId: 475fbc57-82d6-5dc7-a8e0-f2268bff5505
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/1b3cf76e-05a9-3362-85ef-c14f2fa801a0
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/d7305c37-73bd-3f60-80df-573075692971
+UserFrom MessageId: bbbd7942-a16f-5f3d-ab8e-3733a8ee15c0
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/1b3cf76e-05a9-3362-85ef-c14f2fa801a0
+UserTo MessageId: 782a28be-dd64-534e-95e3-66cfd4e66b8c
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/d7305c37-73bd-3f60-80df-573075692971
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/d7305c37-73bd-3f60-80df-573075692971
+UserFrom MessageId: e687be47-4c18-5d7d-8e1c-f03645a73b9c
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/1b3cf76e-05a9-3362-85ef-c14f2fa801a0
+UserTo MessageId: 4ba13099-8cd8-56ee-b8e8-7ee88567d48b
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/d7305c37-73bd-3f60-80df-573075692971
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/1b3cf76e-05a9-3362-85ef-c14f2fa801a0
+UserFrom MessageId: 17bc8dac-60cf-56dd-99e0-c3dd692dfc20
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/d7305c37-73bd-3f60-80df-573075692971
+UserTo MessageId: 23494f5d-886d-5870-bc3e-012c818f5a15
+PlataformApplicationArn: arn:aws:sns:sa-east-1:232125089208:app/GCM/PushMessageSerie
+EndpointArn: arn:aws:sns:sa-east-1:232125089208:endpoint/GCM/PushMessageSerie/1b3cf76e-05a9-3362-85ef-c14f2fa801a0

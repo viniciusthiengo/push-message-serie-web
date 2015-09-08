@@ -10,6 +10,8 @@
     }
   ],
   "require": {
-    "endroid/gcm": "1.2.7"
+    "endroid/gcm": "1.2.7",
+    "petrsladek/gcm": "dev-master",
+    "aws/aws-sdk-php": "3.3.5"
   }
 }

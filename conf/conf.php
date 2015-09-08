@@ -1,6 +1,7 @@
 <?php
 
-    define('__API_KEY__', 'AIzaSyALBmXgAC2ywNFP_XZsapk2vtJiGA7zFM8');
+    define('__API_KEY__', 'AIzaSyCOmLtHxsp4Yof74X2cup180fxUy2ZVzNM');
+    define('__SENDER_ID__', '847046267483');
 
     // DATABASE
         $settingsDatabase = [

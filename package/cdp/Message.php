@@ -22,6 +22,7 @@
         public $message;
         public $wasRead;
         public $regTime;
+        public $ackId;
 
 
         public function __construct( $id=0,
